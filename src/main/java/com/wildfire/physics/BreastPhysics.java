@@ -22,9 +22,11 @@ import com.wildfire.api.IGenderArmor;
 import com.wildfire.main.GenderPlayer;
 import com.wildfire.main.WildfireHelper;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -54,6 +56,12 @@ public class BreastPhysics {
 		this.wfg_preBounceX = this.wfg_femaleBreastX;
 		this.wfg_preBounceRotation = this.wfg_bounceRotation;
 		this.preBreastSize = this.breastSize;
+
+		if (entity instanceof ArmorStand && !armor.armorStandsCopySettings()) {
+			// optimization: skip physics on armor stands that either don't have a chestplate,
+			// or have a chestplate we wouldn't copy player settings to
+			return;
+		}
 
 		if(this.prePos == null) {
 			this.prePos = plr.position();

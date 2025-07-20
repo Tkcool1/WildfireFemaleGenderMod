@@ -68,4 +68,8 @@ public interface IGenderArmor {
     default float tightness() {
         return 0;
     }
+
+    default boolean armorStandsCopySettings() {
+        return !alwaysHidesBreasts() && coversBreasts() && physicsResistance() == 1F;
+    }
 }
